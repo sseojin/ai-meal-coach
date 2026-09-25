@@ -1,0 +1,16 @@
+{
+  "expo": {
+    "name": "AI Meal Coach",
+    "slug": "ai-meal-coach",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "ios": { "supportsTablet": false },
+    "android": { "package": "com.aimealcoach.app" },
+    "plugins": [
+      ["expo-image-picker", {
+        "photosPermission": "Choose a meal photo to analyze.",
+        "cameraPermission": "Take a meal photo to analyze."
+      }]
+    ]
+  }
+}

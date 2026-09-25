@@ -7,7 +7,7 @@
 
 | 항목 | 값 |
 |---|---|
-| 모델 | `gemini-2.5-flash` (환경변수 `GEMINI_MODEL`) |
+| 모델 | `gemini-3.5-flash-lite` (환경변수 `GEMINI_MODEL`) |
 | SDK | `@google/genai` |
 | 호출 | `ai.models.generateContent()` |
 | 호출 위치 | Express 서버만. 앱은 Gemini를 직접 호출하지 않는다. |
@@ -261,7 +261,7 @@ import { GoogleGenAI } from "@google/genai";
 import fs from "node:fs";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-const MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+const MODEL = process.env.GEMINI_MODEL || "gemini-3.5-flash-lite";
 
 async function analyse({ imagePath, mimeType, prompt }) {
   const base64 = fs.readFileSync(imagePath, { encoding: "base64" });

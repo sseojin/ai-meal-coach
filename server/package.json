@@ -1,0 +1,20 @@
+{
+  "name": "ai-meal-coach-server",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node src/index.js",
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "@google/genai": "^2.0.0",
+    "better-sqlite3": "^13.0.0",
+    "dotenv": "^17.0.0",
+    "express": "^5.0.0",
+    "multer": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

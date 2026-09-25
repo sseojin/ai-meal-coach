@@ -271,7 +271,7 @@ Gemini는 다음 역할만 담당한다.
 
 ### 5.1 모델
 
-- 기본 모델: `gemini-2.5-flash` (환경변수 `GEMINI_MODEL`로 관리)
+- 기본 모델: `gemini-3.5-flash-lite` (환경변수 `GEMINI_MODEL`로 관리)
 - 호출 위치: Express 백엔드만. 앱은 Gemini를 직접 호출하지 않는다.
 - SDK: `@google/genai` · `ai.models.generateContent()`
 - 이미지 전송: 로컬 파일을 Base64로 읽어 `inlineData`로 전송
@@ -489,7 +489,7 @@ intended for medical or dietary diagnosis.
 | Database | SQLite (`better-sqlite3`) | 13.x | DB 서버 없이 로컬 파일 |
 | File upload | Multer | 2.x | multipart 검증과 저장 |
 | GenAI SDK | `@google/genai` | 2.x | Google 공식 JS SDK |
-| GenAI model | Gemini 2.5 Flash | `gemini-2.5-flash` | 이미지 입력 + Structured Output |
+| GenAI model | Gemini 3.5 Flash-Lite | `gemini-3.5-flash-lite` | 이미지 입력 + Structured Output |
 | Configuration | dotenv | 17.x | API 키 분리 |
 | Styling | React Native StyleSheet | — | UI 라이브러리 학습 비용 제거 |
 

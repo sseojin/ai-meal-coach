@@ -18,14 +18,7 @@
 
 팀원 몫이 전부 "이미 존재하는 API에 UI 붙이기"라서, 1차가 반나절 밀리면 팀원은 그만큼 놀게 된다. 지연이 흡수되지 않고 누적되는 구조다.
 
-**대응: 1일차 오전에 Mock 서버를 먼저 띄운다.** `project_spec.md` 10장에 모든 엔드포인트의 요청·응답이 확정되어 있으므로, 그 형태 그대로 고정값을 돌려주는 Express 목업은 30분이면 만들 수 있다. 팀원은 서진이 Gemini와 씨름하는 동안 UI를 병렬로 짤 수 있고, 서진은 나중에 목업을 실제 구현으로 교체하면 된다.
-
-```js
-// server/src/mock.js — 1일차 오전에 먼저
-app.post("/api/reports", (req, res) => res.status(201).json(SAMPLE_REPORT_A));
-app.get("/api/reports", (req, res) => res.json({ reports: [SAMPLE_REPORT_A, SAMPLE_REPORT_C] }));
-// ai-contract.md 8장의 예시 응답을 그대로 쓰면 된다
-```
+**대응:** `project_spec.md` 10장의 확정된 API 계약을 기준으로 팀원은 화면을 병렬 구현한다. 서진이 실제 API를 완성하면 연결하고 함께 검증한다.
 
 ---
 
@@ -51,7 +44,7 @@ Expo 앱 실행 → 카메라 촬영 또는 갤러리 선택 → Express 업로�
 **작업 순서**
 
 1. 모노레포 구조와 npm 초기화 (`mobile/`, `server/`)
-2. **Mock 서버 먼저 띄우고 팀원에게 전달**
+2. 확정된 API 계약을 팀원에게 전달하고 실제 서버 구현 시작
 3. SQLite 스키마, mapper, CRUD 서비스
 4. Multer 업로드, UUID 파일명, `/uploads` 정적 제공, 실패 시 정리
 5. Gemini 프롬프트 2종 + JSON Schema + 검증 V-1~V-10
@@ -169,7 +162,7 @@ mobile/src/styles.js
 - [ ] History에 기존 리포트 2~3개 남겨두기
 - [ ] 노트북과 휴대폰이 같은 Wi-Fi인지 확인, LAN IP 재확인 (강의실 Wi-Fi에서 바뀜)
 - [ ] 휴대폰 화면 미러링 또는 화면 녹화 준비
-- [ ] 실제 API만 쓰므로 Mock 대체 모드가 없다 — API 장애 시 History 조회로 흐름 마무리
+- [ ] API 장애 시 History 조회로 흐름 마무리
 
 ### 부스 체험 (관람객이 직접 써보는 시간)
 
@@ -185,7 +178,7 @@ mobile/src/styles.js
 | Gemini가 "정확히 3~4개", "low만 gap" 규칙을 어김 | 검증(V-5, V-7)에서 걸러내고 사용자에게 재시도 안내. 자동 재시도는 하지 않는다 |
 | iOS HEIC 업로드 실패 | `expo-image-manipulator`로 JPEG 변환 후 전송. spike에서 먼저 확인 |
 | 강의실 Wi-Fi에서 IP 변경 | 발표 직전 `npm run ip`로 재확인하고 `.env` 수정 후 `npx expo start -c` |
-| 1차가 밀려 팀원이 대기 | Mock 서버를 1일차 오전에 먼저 전달 (1장 참고) |
+| 1차가 밀려 팀원이 대기 | 확정된 API 계약으로 화면을 병렬 구현하고 실제 API 완성 후 연결 |
 | 코치 노트가 매번 같은 문장 | V-9 검증 + `temperature: 0.4` (`ai-contract.md` 9장) |
 
 ---
