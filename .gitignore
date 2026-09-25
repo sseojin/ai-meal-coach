@@ -1,0 +1,33 @@
+# dependencies
+node_modules/
+
+# env
+.env
+.env.local
+
+# runtime data (로컬에만 존재)
+server/data/
+server/uploads/
+
+# expo
+.expo/
+dist/
+web-build/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# logs
+npm-debug.log*
+yarn-error.log*
+*.log
+
+# os
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/
+.idea/

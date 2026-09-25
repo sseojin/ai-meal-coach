@@ -1,0 +1,12 @@
+{
+  "name": "ai-meal-coach",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Photo-based nutrition feedback. Software Engineering Phase 1 scratch project.",
+  "scripts": {
+    "server": "npm --prefix server run dev",
+    "mobile": "npm --prefix mobile run start",
+    "install:all": "npm --prefix server install && npm --prefix mobile install",
+    "ip": "ipconfig getifaddr en0 2>/dev/null || hostname -I | awk '{print $1}'"
+  }
+}
