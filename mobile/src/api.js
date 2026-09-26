@@ -21,8 +21,15 @@ async function request(path, options) {
       NO_MEAL_DETECTED: 'We could not identify a meal in this image. Please upload a clear food photo.',
       IMAGE_TOO_LARGE: 'The image must be 8 MB or smaller.',
       UNSUPPORTED_IMAGE_TYPE: 'Use a JPEG, PNG or WEBP image.',
+      IMAGE_REQUIRED: 'Choose a meal photo before analyzing.',
+      INVALID_MEAL_TYPE: 'Choose a valid meal type.',
       GEMINI_REQUEST_FAILED: 'We could not analyze the meal right now. Please try again.',
       INVALID_AI_RESPONSE: 'We could not analyze the meal right now. Please try again.',
+      REPORT_CREATE_FAILED: 'We could not save this report. Please try again.',
+      INVALID_FOOD_LIST: 'Add at least one valid food name.',
+      REPORT_NOT_FOUND: 'This report may have been deleted. Refresh your history and try again.',
+      SOURCE_IMAGE_MISSING: 'The original photo is missing, so this report cannot be re-analyzed.',
+      FOOD_LIST_MISMATCH: 'We could not re-analyze the corrected food list. Please try again.',
     }[code] || body?.error?.message || 'Something went wrong. Please try again.';
     throw new Error(message);
   }

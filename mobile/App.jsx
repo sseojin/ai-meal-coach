@@ -2,10 +2,27 @@ import { useState } from 'react';
 import { SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AnalyzeScreen from './src/screens/AnalyzeScreen';
 import ReportScreen from './src/screens/ReportScreen';
+import HistoryScreen from './src/screens/HistoryScreen';
+import EditReportScreen from './src/screens/EditReportScreen';
 
 export default function App() {
   const [activeView, setActiveView] = useState('analyze');
   const [report, setReport] = useState(null);
+  const [reportReturnTo, setReportReturnTo] = useState('analyze');
+
+  function openReport(nextReport, returnTo = 'history') {
+    setReport(nextReport);
+    setReportReturnTo(returnTo);
+    setActiveView('report');
+  }
+
+  function finishEdit(nextReport) {
+    setReport(nextReport);
+    setActiveView('report');
+  }
+
+  const activeTab = activeView === 'history' || ((activeView === 'report' || activeView === 'edit') && reportReturnTo === 'history')
+    ? 'history' : 'analyze';
 
   return (
     <SafeAreaView style={styles.page}>
@@ -13,17 +30,24 @@ export default function App() {
       <View style={styles.header}>
         <Text style={styles.brand}>AI Meal Coach</Text>
         <View style={styles.tabs}>
-          <TouchableOpacity onPress={() => setActiveView('analyze')} accessibilityRole="tab" accessibilityState={{ selected: activeView === 'analyze' }} style={styles.tab}>
-            <Text style={activeView === 'analyze' ? styles.selected : styles.unselected}>Analyze</Text>
+          <TouchableOpacity onPress={() => setActiveView('analyze')} accessibilityRole="tab" accessibilityState={{ selected: activeTab === 'analyze' }} style={styles.tab}>
+            <Text style={activeTab === 'analyze' ? styles.selected : styles.unselected}>Analyze</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => setActiveView('history')} accessibilityRole="tab" accessibilityState={{ selected: activeView === 'history' }} style={styles.tab}>
-            <Text style={activeView === 'history' ? styles.selected : styles.unselected}>History</Text>
+          <TouchableOpacity onPress={() => setActiveView('history')} accessibilityRole="tab" accessibilityState={{ selected: activeTab === 'history' }} style={styles.tab}>
+            <Text style={activeTab === 'history' ? styles.selected : styles.unselected}>History</Text>
           </TouchableOpacity>
         </View>
       </View>
-      {activeView === 'analyze' ? <AnalyzeScreen onCreated={(next) => { setReport(next); setActiveView('report'); }} /> :
-        activeView === 'report' ? <ReportScreen report={report} onBack={() => setActiveView('analyze')} /> :
-          <View style={styles.pending}><Text style={styles.unselected}>History is being added.</Text></View>}
+      {activeView === 'analyze' ? <AnalyzeScreen onCreated={(next) => openReport(next, 'analyze')} /> :
+        activeView === 'history' ? <HistoryScreen onAnalyze={() => setActiveView('analyze')} onSelect={(next) => openReport(next, 'history')} /> :
+          activeView === 'report' ? <ReportScreen
+            report={report}
+            backLabel={reportReturnTo === 'history' ? 'Back to History' : 'Analyze another meal'}
+            onBack={() => setActiveView(reportReturnTo)}
+            onEdit={() => setActiveView('edit')}
+            onDeleted={() => { setReport(null); setActiveView('history'); }}
+          /> :
+            <EditReportScreen key={report?.id} report={report} onCancel={() => setActiveView('report')} onUpdated={finishEdit} />}
     </SafeAreaView>
   );
 }
@@ -36,5 +60,4 @@ const styles = StyleSheet.create({
   tab: { paddingBottom: 11, minHeight: 40, justifyContent: 'center' },
   selected: { color: '#245C46', fontWeight: '700', fontSize: 15 },
   unselected: { color: '#647069', fontSize: 15 },
-  pending: { flex: 1, alignItems: 'center', justifyContent: 'center' },
 });
